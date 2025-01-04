@@ -2,7 +2,6 @@ name: Full CI Tests
 
 on:
   push:
-  pull_request:
 
 jobs:
   backend:
@@ -10,7 +9,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x, 16.x]
+        node-version: [16.x, 18.x]
 
     steps:
       - name: Checkout repository
@@ -20,10 +19,25 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'yarn'
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Use Yarn 4 (Berry)
+        run: corepack prepare yarn@4.6.0 --activate
+
+      - name: Cache Node.js modules
+        uses: actions/cache@v3
+        with:
+          path: backend/node_modules
+          key: ${{ runner.os }}-node-${{ matrix.node-version }}-backend-${{ hashFiles('backend/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ matrix.node-version }}-backend-
 
       - name: Install dependencies
-        run: cd backend && yarn install --frozen-lockfile
+        working-directory: backend
+        run: yarn install --frozen-lockfile
 
       - name: Run tests
-        run: cd backend && yarn test
+        working-directory: backend
+        run: yarn test
