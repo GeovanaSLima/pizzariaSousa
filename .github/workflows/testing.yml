@@ -1,11 +1,11 @@
-name: Backend CI Tests
+name: Full CI Tests
 
 on:
   push:
   pull_request:
 
 jobs:
-  test-ci:
+  backend:
     runs-on: ubuntu-latest
 
     strategy:
@@ -14,16 +14,16 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
       - name: Set Up Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
 
       - name: Install dependencies
-        run: cd backend &&yarn install --frozen-lockfile
+        run: cd backend && yarn install --frozen-lockfile
 
       - name: Run tests
         run: cd backend && yarn test
