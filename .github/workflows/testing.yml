@@ -20,11 +20,14 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'yarn'
 
-      - name: Change directory to backend
-        working-directory: backend
-        run: echo "Changed to backend directory"
+      - name: Cache Node.js modules
+        uses: actions/cache@v3
+        with:
+          path: backend/node_modules
+          key: ${{ runner.os }}-node-${{ matrix.node-version }}-backend-${{ hashFiles('backend/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ matrix.node-version }}-backend-
 
       - name: Install dependencies
         working-directory: backend
