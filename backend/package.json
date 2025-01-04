@@ -23,9 +23,10 @@
     "typescript-eslint": "^8.19.0"
   },
   "scripts": {
-    "dev": "ts-node-dev src/server.ts",
+    "dev": "ts-node-dev src/main/server.ts",
     "lint": "eslint src/**/*.ts",
     "lint:fix": "eslint src/**/*.ts --fix",
-    "format": "prettier . --write"
+    "format": "prettier . --write",
+    "test": "jest --passWithNoTests"
   }
 }
