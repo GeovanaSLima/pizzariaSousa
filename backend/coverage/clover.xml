@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1736008275736" clover="3.2.0">
-  <project timestamp="1736008275736" name="All files">
-    <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0" elements="0" coveredelements="0" complexity="0" loc="0" ncloc="0" packages="0" files="0" classes="0"/>
+<coverage generated="1736127602655" clover="3.2.0">
+  <project timestamp="1736127602655" name="All files">
+    <metrics statements="11" coveredstatements="11" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1" elements="14" coveredelements="14" complexity="0" loc="11" ncloc="11" packages="1" files="1" classes="1"/>
+    <file name="CreateUserService.ts" path="/home/geovana/Projects/pizzariaSousa/pizzaria/backend/src/main/services/user/CreateUserService.ts">
+      <metrics statements="11" coveredstatements="11" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+      <line num="1" count="1" type="stmt"/>
+      <line num="2" count="1" type="stmt"/>
+      <line num="12" count="3" type="cond" truecount="1" falsecount="0"/>
+      <line num="13" count="1" type="stmt"/>
+      <line num="16" count="2" type="stmt"/>
+      <line num="22" count="2" type="cond" truecount="1" falsecount="0"/>
+      <line num="23" count="1" type="stmt"/>
+      <line num="26" count="1" type="stmt"/>
+      <line num="28" count="1" type="stmt"/>
+      <line num="41" count="1" type="stmt"/>
+      <line num="45" count="1" type="stmt"/>
+    </file>
   </project>
 </coverage>
