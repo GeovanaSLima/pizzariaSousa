@@ -38,6 +38,7 @@ describe('AuthUserService', () => {
 
     expect(sign).not.toHaveBeenCalled();
   });
+
   it('should throw an error if password does not match', async () => {
     const authUserService = new AuthUserService();
     const mockUser = {
