@@ -39,7 +39,7 @@
     "typescript-eslint": "^8.19.0"
   },
   "scripts": {
-    "dev": "ts-node-dev src/main/server.ts",
+    "dev": "ts-node-dev --files src/main/server.ts",
     "lint": "eslint src/**/*.ts",
     "lint:fix": "eslint src/**/*.ts --fix",
     "format": "prettier . --write",
