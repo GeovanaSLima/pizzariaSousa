@@ -43,6 +43,6 @@
     "lint": "eslint src/**/*.ts",
     "lint:fix": "eslint src/**/*.ts --fix",
     "format": "prettier . --write",
-    "test": "jest --passWithNoTests --watch --coverage"
+    "test": "jest --passWithNoTests --watchAll --coverage"
   }
 }
