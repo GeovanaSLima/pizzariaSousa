@@ -40,4 +40,4 @@ jobs:
 
       - name: Run tests
         working-directory: backend
-        run: jest --passWithNoTests --coverage
+        run: yarn test
