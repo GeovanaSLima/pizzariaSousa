@@ -6,6 +6,7 @@
 !.yarn/versions
 .pnp.*
 .env
+.env.test
 node_modules
 coverage/*
 coverage/
