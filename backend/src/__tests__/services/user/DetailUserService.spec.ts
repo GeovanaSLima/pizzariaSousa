@@ -1,5 +1,5 @@
-import { DetailUserService } from '../../main/services/user/DetailUserService';
-import prismaClient from '../../main/prisma';
+import { DetailUserService } from '@/services/user/DetailUserService';
+import prismaClient from '@/prisma';
 
 jest.mock('../../main/prisma', () => ({
   user: {
