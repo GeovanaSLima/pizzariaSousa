@@ -5,10 +5,8 @@ const config: Config = {
   testEnvironment: 'node',
   moduleFileExtensions: ['js', 'ts'],
   testMatch: ['**/*.spec.ts', '**/*.test.ts'],
-  globals: {
-    'ts-jest': {
-      tsconfig: 'tsconfig.json',
-    },
+  transform: {
+    '^.+\\.ts$': ['ts-jest', { tsconfig: 'tsconfig.json' }],
   },
 };
 
