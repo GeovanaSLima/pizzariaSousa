@@ -8,6 +8,18 @@ const config: Config = {
   transform: {
     '^.+\\.ts$': ['ts-jest', { tsconfig: 'tsconfig.json' }],
   },
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/src/main/$1',
+  },
+  collectCoverage: true,
+  collectCoverageFrom: [
+    'src/main/services/*.{ts,js}',
+    'src/main/middlewares/*.{ts,js}',
+    '!src/**/*.d.ts',
+  ],
+  coverageDirectory: 'coverage',
+  coverageReporters: ['text', 'lcov'],
+  clearMocks: true,
 };
 
 export default config;

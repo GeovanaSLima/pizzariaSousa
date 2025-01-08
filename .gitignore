@@ -7,5 +7,5 @@
 .pnp.*
 .env
 node_modules
-# coverage/*
-coverage
+coverage/*
+coverage/

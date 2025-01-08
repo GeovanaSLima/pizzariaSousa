@@ -1,4 +1,4 @@
-import { isAuthenticated } from '../../main/middlewares/isAuthenticated';
+import { isAuthenticated } from '@/middlewares/isAuthenticated';
 import { Request, Response, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
 
