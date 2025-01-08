@@ -2,7 +2,6 @@ import express, { Application, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { router } from './routes';
-import { config } from './config';
 
 dotenv.config({ path: `.env.${process.env.NODE_ENV || 'development'}` });
 
