@@ -3,7 +3,7 @@ import prismaClient from '@/prisma';
 import { AuthUserService } from '@/services/user/AuthUserService';
 import * as bcrypt from 'bcryptjs';
 
-jest.mock('../../main/prisma', () => ({
+jest.mock('@/prisma', () => ({
   user: {
     findFirst: jest.fn(),
   },

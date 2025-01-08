@@ -1,7 +1,7 @@
 import prismaClient from '@/prisma';
 import { CreateUserService } from '@/services/user/CreateUserService';
 
-jest.mock('../../main/prisma', () => ({
+jest.mock('@/prisma', () => ({
   user: {
     findFirst: jest.fn(),
     create: jest.fn(),
