@@ -40,10 +40,10 @@
     "typescript-eslint": "^8.19.0"
   },
   "scripts": {
-    "dev": "ts-node-dev --files -r tsconfig-paths/register src/main/server.ts",
+    "dev": "NODE_ENV=development ts-node-dev --files -r tsconfig-paths/register src/main/server.ts",
     "lint": "eslint src/**/*.ts",
     "lint:fix": "eslint src/**/*.ts --fix",
     "format": "prettier . --write",
-    "test": "jest --passWithNoTests --coverage"
+    "test": "NODE_ENV=test jest --passWithNoTests --coverage --runInBand --no-cache"
   }
 }

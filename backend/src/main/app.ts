@@ -2,8 +2,9 @@ import express, { Application, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { router } from './routes';
+import { config } from './config';
 
-dotenv.config();
+dotenv.config({ path: `.env.${process.env.NODE_ENV || 'development'}` });
 
 class App {
   private app: Application;
@@ -43,8 +44,8 @@ class App {
     this.app.use(router);
   }
 
-  listen(port: number) {
-    this.app.listen(port, () => console.log('Server running'));
+  listen(port: string) {
+    this.app.listen(Number(port), () => console.log('Server running'));
   }
 }
 
