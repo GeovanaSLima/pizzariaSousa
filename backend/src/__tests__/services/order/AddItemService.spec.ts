@@ -1,5 +1,5 @@
 import prismaClient from '@/prisma';
-import { AddItemService } from '@/services/items/AddItemService';
+import { AddItemService } from '@/services/order/AddItemService';
 
 jest.mock('@/prisma', () => ({
   item: {

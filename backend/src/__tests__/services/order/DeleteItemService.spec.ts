@@ -1,5 +1,5 @@
 import prismaClient from '@/prisma';
-import { DeleteItemService } from '@/services/items/DeleteItemService';
+import { DeleteItemService } from '@/services/order/DeleteItemService';
 
 jest.mock('@/prisma', () => ({
   item: {
