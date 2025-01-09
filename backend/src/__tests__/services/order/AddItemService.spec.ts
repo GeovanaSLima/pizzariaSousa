@@ -18,8 +18,8 @@ describe('AddItemService', () => {
       order_id: '1',
       product_id: '1',
       amount: 1,
-      created_at: new Date(),
-      updated_at: new Date(),
+      created_at: new Date('2025-01-09T04:24:34.790Z'),
+      updated_at: new Date('2025-01-09T04:24:34.790Z'),
     };
 
     jest.mocked(prismaClient.order.findFirst).mockResolvedValueOnce({
@@ -28,8 +28,8 @@ describe('AddItemService', () => {
       name: 'John Doe',
       status: false,
       draft: true,
-      created_at: new Date(),
-      updated_at: new Date(),
+      created_at: new Date('2025-01-09T04:24:34.790Z'),
+      updated_at: new Date('2025-01-09T04:24:34.790Z'),
     });
     jest.mocked(prismaClient.item.create).mockResolvedValueOnce(mockItem);
 

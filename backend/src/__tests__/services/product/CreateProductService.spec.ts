@@ -33,8 +33,8 @@ describe('CreateProductService', () => {
       description: 'description 1',
       banner: 'banner.jpg',
       category_id: '1',
-      created_at: new Date(),
-      updated_at: new Date(),
+      created_at: new Date('2025-01-09T04:24:34.790Z'),
+      updated_at: new Date('2025-01-09T04:24:34.790Z'),
     };
 
     const mockRequest = {
@@ -74,8 +74,8 @@ describe('CreateProductService', () => {
       description: 'description 2',
       banner: 'banner2.jpg',
       category_id: '2',
-      created_at: new Date(),
-      updated_at: new Date(),
+      created_at: new Date('2025-01-09T04:24:34.790Z'),
+      updated_at: new Date('2025-01-09T04:24:34.790Z'),
     };
 
     jest.mocked(prismaClient.product.findFirst).mockResolvedValueOnce(null);

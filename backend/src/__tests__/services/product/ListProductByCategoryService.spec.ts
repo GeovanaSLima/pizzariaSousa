@@ -19,8 +19,8 @@ describe('ListProductByCategoryService', () => {
         price: '5.00',
         banner: 'coca-cola.jpg',
         description: 'Coca-Cola lata 350ml',
-        created_at: new Date(),
-        updated_at: new Date(),
+        created_at: new Date('2025-01-09T04:24:34.790Z'),
+        updated_at: new Date('2025-01-09T04:24:34.790Z'),
       },
       {
         id: '2',
@@ -29,8 +29,8 @@ describe('ListProductByCategoryService', () => {
         price: '5.00',
         banner: 'gurana.jpg',
         description: 'Guarana lata 350ml',
-        created_at: new Date(),
-        updated_at: new Date(),
+        created_at: new Date('2025-01-09T04:24:34.790Z'),
+        updated_at: new Date('2025-01-09T04:24:34.790Z'),
       },
       {
         id: '3',
@@ -39,8 +39,8 @@ describe('ListProductByCategoryService', () => {
         price: '55.00',
         banner: 'calabresa.jpg',
         description: 'Pizza de calabresa',
-        created_at: new Date(),
-        updated_at: new Date(),
+        created_at: new Date('2025-01-09T04:24:34.790Z'),
+        updated_at: new Date('2025-01-09T04:24:34.790Z'),
       },
     ];
 

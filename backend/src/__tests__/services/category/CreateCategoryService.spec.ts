@@ -26,8 +26,8 @@ describe('CreateCategoryService', () => {
     const mockCategory = {
       id: '1',
       name: 'bebidas',
-      created_at: new Date(),
-      updated_at: new Date(),
+      created_at: new Date('2025-01-09T04:24:34.790Z'),
+      updated_at: new Date('2025-01-09T04:24:34.790Z'),
     };
 
     jest
@@ -51,8 +51,8 @@ describe('CreateCategoryService', () => {
     const mockCategory = {
       id: '1',
       name: 'bebidas',
-      created_at: new Date(),
-      updated_at: new Date(),
+      created_at: new Date('2025-01-09T04:24:34.790Z'),
+      updated_at: new Date('2025-01-09T04:24:34.790Z'),
     };
 
     jest.mocked(prismaClient.category.findFirst).mockResolvedValueOnce(null);

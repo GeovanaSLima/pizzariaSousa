@@ -14,14 +14,14 @@ describe('ListCategorySevice', () => {
       {
         id: '1',
         name: 'Bebidas',
-        created_at: new Date(),
-        updated_at: new Date(),
+        created_at: new Date('2025-01-09T04:24:34.790Z'),
+        updated_at: new Date('2025-01-09T04:24:34.790Z'),
       },
       {
         id: '2',
         name: 'Pizzas',
-        created_at: new Date(),
-        updated_at: new Date(),
+        created_at: new Date('2025-01-09T04:24:34.790Z'),
+        updated_at: new Date('2025-01-09T04:24:34.790Z'),
       },
     ];
 

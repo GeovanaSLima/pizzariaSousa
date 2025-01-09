@@ -46,8 +46,8 @@ describe('AuthUserService', () => {
       name: 'John Doe',
       email: 'john@example.com',
       password: 'hashed_password',
-      created_at: new Date(),
-      updated_at: new Date(),
+      created_at: new Date("2025-01-09T04:24:34.790Z"),
+      updated_at: new Date("2025-01-09T04:24:34.790Z"),
     };
 
     jest.mocked(prismaClient.user.findFirst).mockResolvedValueOnce(mockUser);
@@ -76,8 +76,8 @@ describe('AuthUserService', () => {
       name: 'John Doe',
       email: 'john@example.com',
       password: 'hashed_password',
-      created_at: new Date(),
-      updated_at: new Date(),
+      created_at: new Date("2025-01-09T04:24:34.790Z"),
+      updated_at: new Date("2025-01-09T04:24:34.790Z"),
     };
 
     jest.mocked(prismaClient.user.findFirst).mockResolvedValueOnce(mockUser);
