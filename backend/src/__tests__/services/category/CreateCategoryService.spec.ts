@@ -25,7 +25,7 @@ describe('CreateCategoryService', () => {
     const createCategoryService = new CreateCategoryService();
     const mockCategory = {
       id: '1',
-      name: 'Bebidas',
+      name: 'bebidas',
       created_at: new Date(),
       updated_at: new Date(),
     };
@@ -41,7 +41,7 @@ describe('CreateCategoryService', () => {
     ).rejects.toThrow('Category already exists');
 
     expect(prismaClient.category.findFirst).toHaveBeenCalledWith({
-      where: { name: 'Bebidas' },
+      where: { name: 'bebidas' },
     });
     expect(prismaClient.category.create).not.toHaveBeenCalled();
   });
@@ -50,7 +50,7 @@ describe('CreateCategoryService', () => {
     const createCategoryService = new CreateCategoryService();
     const mockCategory = {
       id: '1',
-      name: 'Bebidas',
+      name: 'bebidas',
       created_at: new Date(),
       updated_at: new Date(),
     };
@@ -65,12 +65,12 @@ describe('CreateCategoryService', () => {
     expect(result).toEqual(mockCategory);
     expect(prismaClient.category.findFirst).toHaveBeenCalledWith({
       where: {
-        name: 'Bebidas',
+        name: 'bebidas',
       },
     });
     expect(prismaClient.category.create).toHaveBeenLastCalledWith({
       data: {
-        name: 'Bebidas',
+        name: 'bebidas',
       },
       select: {
         id: true,
