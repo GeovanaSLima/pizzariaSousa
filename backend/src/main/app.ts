@@ -2,7 +2,7 @@ import express, { Application, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { router } from './routes';
-import { config } from './config';
+import path from 'path';
 
 dotenv.config({ path: `.env.${process.env.NODE_ENV || 'development'}` });
 
@@ -13,6 +13,7 @@ class App {
     this.config();
     this.errorHandler();
     this.routes();
+    this.files();
   }
 
   config() {
@@ -46,6 +47,13 @@ class App {
 
   listen(port: string) {
     this.app.listen(Number(port), () => console.log('Server running'));
+  }
+
+  files() {
+    this.app.use(
+      '/files',
+      express.static(path.resolve(__dirname, '..', '..', 'tmp'))
+    );
   }
 }
 

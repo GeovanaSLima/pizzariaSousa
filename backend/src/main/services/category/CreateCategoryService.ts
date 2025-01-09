@@ -10,9 +10,11 @@ class CreateCategoryService {
       throw new Error('Category Name is required');
     }
 
+    const normalizedName = name.toLowerCase();
+
     const categoryAlreadyExists = await prismaClient.category.findFirst({
       where: {
-        name: name,
+        name: normalizedName,
       },
     });
 
@@ -22,7 +24,7 @@ class CreateCategoryService {
 
     const category = await prismaClient.category.create({
       data: {
-        name: name,
+        name: normalizedName,
       },
       select: {
         id: true,
