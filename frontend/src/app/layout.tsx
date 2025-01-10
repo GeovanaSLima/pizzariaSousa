@@ -1,20 +1,13 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.scss";
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import './globals.scss';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: "Pizzaria Sousa - A melhor pizza da região",
-  description: "Desde 2000 sendo a melhor pizzaria da região e oferecendo sabores inigualáveis",
+  title: 'Pizzaria Sousa - A melhor pizza da região',
+  description:
+    'Desde 2000 sendo a melhor pizzaria da região e oferecendo sabores inigualáveis',
 };
 
 export default function RootLayout({
@@ -24,9 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {children}
-      </body>
+      <body className={inter.className}>{children}</body>
     </html>
   );
 }

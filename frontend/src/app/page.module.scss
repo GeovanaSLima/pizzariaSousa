@@ -6,6 +6,10 @@
   align-items: center;
 }
 
+.logo {
+  width: 500px;
+}
+
 .login {
   margin-top: 36px;
   display: flex;
@@ -14,6 +18,10 @@
   justify-content: center;
   gap: 16px;
   width: 550px;
+
+  h1 {
+    color: var(--white);
+  }
 
   form {
     color: var(--white);
@@ -71,6 +79,10 @@
 }
 
 @media (max-width: 620px) {
+  .logo {
+    width: 80%;
+  }
+
   .login {
     width: 90%;
   }
