@@ -12,9 +12,15 @@
   --dark-900: #101026;
   --dark-700: #1d1d2e;
 
-  --gray-100: #8a8a8a;
+  --gray-100: #3f3f3f;
+  --gray-200: #8a8a8a;
   --green-900: #3fffa3;
-  --red-900: #E11138;
+
+  --red-400: #e74160;
+  --red-500: #e11138;
+  --red-600: #c20f30;
+  --red-700: #9b0b27;
+  --red-800: #5a0716;
 }
 
 button {
@@ -30,7 +36,11 @@ body {
   background-color: var(--dark-700);
 }
 
-body, input, textarea, select, button {
+body,
+input,
+textarea,
+select,
+button {
   font: 400, 1rem sans-serif;
 }
 
