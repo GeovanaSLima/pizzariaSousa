@@ -1,48 +1,34 @@
-import Link from 'next/link';
-import styles from './page.module.scss';
-import logoImg from '/public/logo.svg';
 import Image from 'next/image';
+import Link from 'next/link';
+import styles from '../page.module.scss';
+import logoImg from '/public/logo.svg';
 import { api } from '@/services/api';
 import { redirect } from 'next/navigation';
-import { cookies } from 'next/headers';
 
-export default function Home() {
-  async function handleLogin(formData: FormData) {
+export default function SignUp() {
+  async function handleRegister(formData: FormData) {
     'use server';
 
+    const name = formData.get('name');
     const email = formData.get('email');
     const password = formData.get('password');
 
-    if (email === '' || password === '') {
+    if (name === '' || email === '' || password === '') {
+      console.log('Preencha todos os campos');
       return;
     }
 
     try {
-      const response = await api.post('/session', {
+      await api.post('/users', {
+        name,
         email,
         password,
       });
-
-      if (!response.data.token) {
-        return;
-      }
-
-      const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-
-      (await cookies()).set('session', response.data.token, {
-        expires: expiresAt,
-        path: '/',
-        httpOnly: false,
-        secure: process.env.NODE_ENV === 'production',
-      });
-
-      console.log(response.data);
     } catch (err) {
       console.log(err);
-      return;
     }
 
-    redirect('/dashboard');
+    redirect('/');
   }
 
   return (
@@ -55,7 +41,15 @@ export default function Home() {
         />
 
         <section className={styles.login}>
-          <form action={handleLogin}>
+          <h1>Criando sua Conta</h1>
+          <form action={handleRegister}>
+            <input
+              type="text"
+              required
+              name="name"
+              placeholder="Digite seu nome..."
+              className={styles.input}
+            />
             <input
               type="email"
               required
@@ -71,11 +65,11 @@ export default function Home() {
               className={styles.input}
             />
 
-            <button type="submit">Acessar</button>
+            <button type="submit">Cadastrar</button>
           </form>
 
-          <Link href="/signup" className={styles.registerText}>
-            Não possui uma conta? Cadastre-se
+          <Link href="/register" className={styles.registerText}>
+            Já possui uma conta? Faço o login
           </Link>
         </section>
       </div>
