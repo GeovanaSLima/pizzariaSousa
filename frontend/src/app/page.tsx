@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { api } from '@/services/api';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
-import exp from 'constants';
 
 export default function Home() {
   async function handleLogin(formData: FormData) {
@@ -28,10 +27,10 @@ export default function Home() {
         return;
       }
 
-      const expressTime = 60 * 60 * 24 * 30 * 1000;
+      const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
 
       (await cookies()).set('session', response.data.token, {
-        maxAge: expressTime,
+        expires: expiresAt,
         path: '/',
         httpOnly: false,
         secure: process.env.NODE_ENV === 'production',
