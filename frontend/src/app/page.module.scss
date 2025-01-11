@@ -88,6 +88,10 @@
     padding-left: 25px !important;
   }
 
+  option {
+    text-transform: capitalize;
+  }
+
   textarea {
     min-height: 120px;
     resize: none;
