@@ -78,6 +78,26 @@
   color: rgba(255, 255, 255, 0.8);
 }
 
+.categoryContainer {
+  max-width: 720px;
+  margin: 20px auto;
+  padding: 0 16px;
+
+  display: flex;
+  flex-direction: column;
+
+  h1 {
+    color: var(--white);
+  }
+}
+
+.categoryForm {
+  display: flex;
+  flex-direction: column;
+  margin: 16px 0;
+  gap: 16px;
+}
+
 @media (max-width: 620px) {
   .logo {
     width: 80%;

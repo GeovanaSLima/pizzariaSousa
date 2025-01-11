@@ -1,0 +1,12 @@
+.button {
+  height: 40px;
+  border-radius: 8px;
+  border: 0;
+  background-color: var(--red-600);
+  color: var(--white);
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s;
+}

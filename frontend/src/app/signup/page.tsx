@@ -4,6 +4,7 @@ import styles from '../page.module.scss';
 import logoImg from '/public/logo.svg';
 import { api } from '@/services/api';
 import { redirect } from 'next/navigation';
+import { Button } from '@/components/button';
 
 export default function SignUp() {
   async function handleRegister(formData: FormData) {
@@ -65,7 +66,7 @@ export default function SignUp() {
               className={styles.input}
             />
 
-            <button type="submit">Cadastrar</button>
+            <Button message="Cadastrar" />
           </form>
 
           <Link href="/register" className={styles.registerText}>
