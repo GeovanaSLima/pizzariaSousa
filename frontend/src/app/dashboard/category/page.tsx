@@ -1,5 +1,5 @@
 import { Button } from '@/components/button';
-import styles from '../../page.module.scss';
+import styles from '@/app/page.module.scss';
 import { api } from '@/services/api';
 import { getCookieServer } from '@/lib/cookieServer';
 import { redirect } from 'next/navigation';
@@ -38,10 +38,9 @@ export default function Category() {
           placeholder="Nome da categoria, ex: Pizzas"
           required
           className={styles.input}
-          style={{ height: '45px' }}
         />
 
-        <Button message="Cadastrar" />
+        <Button message="Cadastrar Categoria" />
       </form>
     </main>
   );
