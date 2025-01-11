@@ -69,7 +69,7 @@ export default function SignUp() {
             <Button message="Cadastrar" />
           </form>
 
-          <Link href="/register" className={styles.registerText}>
+          <Link href="/" className={styles.registerText}>
             Já possui uma conta? Faço o login
           </Link>
         </section>
