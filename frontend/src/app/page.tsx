@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { api } from '@/services/api';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
+import { Button } from '@/components/button';
 
 export default function Home() {
   async function handleLogin(formData: FormData) {
@@ -38,7 +39,6 @@ export default function Home() {
 
       console.log(response.data);
     } catch (err) {
-      console.log(err);
       return;
     }
 
@@ -71,7 +71,7 @@ export default function Home() {
               className={styles.input}
             />
 
-            <button type="submit">Acessar</button>
+            <Button message="Acessar" />
           </form>
 
           <Link href="/signup" className={styles.registerText}>

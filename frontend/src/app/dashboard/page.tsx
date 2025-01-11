@@ -1,4 +1,4 @@
-import { Orders } from './components/orders';
+import { Orders } from './_components/orders';
 
 export default function Dashboard() {
   return (
