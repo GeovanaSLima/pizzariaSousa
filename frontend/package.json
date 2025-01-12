@@ -15,7 +15,9 @@
     "next": "15.1.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "sass": "^1.83.1"
+    "react-toastify": "^11.0.2",
+    "sass": "^1.83.1",
+    "sonner": "^1.7.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
