@@ -1,4 +1,5 @@
 import { Header } from '@/app/dashboard/_components/header';
+import { OrderProvider } from '@/providers/order';
 import { Toaster } from 'sonner';
 
 export default function DashboardLayout({
@@ -9,7 +10,7 @@ export default function DashboardLayout({
   return (
     <>
       <Header />
-      {children}
+      <OrderProvider>{children}</OrderProvider>
     </>
   );
 }
