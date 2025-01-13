@@ -2,7 +2,7 @@ import { X } from 'lucide-react';
 import styles from './components.module.scss';
 import { OrderContext } from '@/providers/order';
 import { use } from 'react';
-import { capitalize, wordToWordCapitalize } from '@/lib/utils';
+import { calculateTotal, capitalize, wordToWordCapitalize } from '@/lib/utils';
 
 export function OrderDetail() {
   const { onRequestClose, order, finishOrder } = use(OrderContext);
@@ -38,13 +38,19 @@ export function OrderDetail() {
           {order.map((item) => (
             <section className={styles.modalItem} key={item.id}>
               <span>
-                {item.amount} - <b>{wordToWordCapitalize(item.product.name)}</b>
+                Qtd: {item.amount} -{' '}
+                <b>{wordToWordCapitalize(item.product.name)}</b> - R${' '}
+                {item.product.price}
               </span>
               <span className={styles.modalDescription}>
                 {capitalize(item.product.description)}
               </span>
             </section>
           ))}
+
+          <h3 className={styles.total}>
+            Valor Total: R$ {calculateTotal(order)}
+          </h3>
 
           <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
             <button className={styles.orderButton} onClick={handlCloseOrder}>

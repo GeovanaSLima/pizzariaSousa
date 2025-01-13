@@ -90,6 +90,10 @@
   margin-right: 16px;
 }
 
+.emptyList {
+  color: var(--gray-200);
+}
+
 .dialogContainer {
   position: fixed;
   left: 0;
@@ -171,4 +175,8 @@
 .modalDescription {
   color: #ccc;
   margin-top: 4px;
+}
+
+.total {
+  margin: 8px 0 16px 0;
 }
