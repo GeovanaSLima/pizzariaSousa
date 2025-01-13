@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { api } from '@/services/api';
 import { getCookieClient } from '@/lib/cookieClient';
 import { toast, Toaster } from 'sonner';
+import { wordToWordCapitalize } from '@/lib/utils';
 
 interface CategoryProps {
   id: string;
@@ -106,10 +107,7 @@ export function Form({ categories }: Props) {
         <select name="category" className={styles.input}>
           {categories.map((category, index) => (
             <option key={category.id} value={index}>
-              {category.name
-                .split(' ')
-                .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-                .join(' ')}
+              {wordToWordCapitalize(category.name)}
             </option>
           ))}
         </select>
