@@ -1,3 +1,4 @@
+import 'tsconfig-paths/register';
 import { App } from './app';
 import { config } from './config/config';
 
