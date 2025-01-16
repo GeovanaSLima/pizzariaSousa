@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { router } from './routes';
 import path from 'path';
+import fileUpload = require('express-fileupload');
 
 dotenv.config({ path: `.env.${process.env.NODE_ENV || 'development'}` });
 
@@ -20,6 +21,7 @@ class App {
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(cors());
+    this.fileUpload();
   }
 
   errorHandler() {
@@ -53,6 +55,14 @@ class App {
     this.app.use(
       '/files',
       express.static(path.resolve(__dirname, '..', '..', 'tmp'))
+    );
+  }
+
+  fileUpload() {
+    this.app.use(
+      fileUpload({
+        limits: { fileSize: 50 * 1024 * 1024 },
+      })
     );
   }
 }
