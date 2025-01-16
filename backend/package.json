@@ -50,6 +50,7 @@
     "lint:fix": "eslint src/**/*.ts --fix",
     "format": "prettier . --write",
     "test": "NODE_ENV=test jest --passWithNoTests --coverage --runInBand --no-cache",
-    "test:w": "NODE_ENV=test jest --passWithNoTests --watch --coverage --runInBand --no-cache"
+    "test:w": "NODE_ENV=test jest --passWithNoTests --watch --coverage --runInBand --no-cache",
+    "build": "tsc --build"
   }
 }
