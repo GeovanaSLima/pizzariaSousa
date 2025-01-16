@@ -1,4 +1,4 @@
-import { SendOrderService } from '@/services/order/SendOrderService';
+import { SendOrderService } from '../../services/order/SendOrderService';
 import { Request, Response } from 'express';
 
 class SendOrderController {

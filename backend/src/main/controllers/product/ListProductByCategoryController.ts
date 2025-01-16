@@ -1,4 +1,4 @@
-import { ListProductByCategoryService } from '@/services/product/ListProductByCategoryService';
+import { ListProductByCategoryService } from '../../services/product/ListProductByCategoryService';
 import { Request, Response } from 'express';
 
 class ListProductByCategoryController {

@@ -1,4 +1,4 @@
-import prismaClient from '@/prisma';
+import prismaClient from '../../prisma';
 
 interface ProductByCategoryRequest {
   category_id: string;

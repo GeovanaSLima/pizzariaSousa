@@ -1,4 +1,4 @@
-import { CreateProductService } from '@/services/product/CreateProductService';
+import { CreateProductService } from '../../services/product/CreateProductService';
 import { Request, Response } from 'express';
 import { UploadedFile } from 'express-fileupload';
 

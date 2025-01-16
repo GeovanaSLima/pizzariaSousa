@@ -1,4 +1,4 @@
-import { FinishOrderService } from '@/services/order/FinishOrderService';
+import { FinishOrderService } from '../../services/order/FinishOrderService';
 import { Request, Response } from 'express';
 
 class FinishOrderController {

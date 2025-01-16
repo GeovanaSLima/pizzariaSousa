@@ -1,4 +1,4 @@
-import { ListOrdersService } from '@/services/order/ListOrdersService';
+import { ListOrdersService } from '../../services/order/ListOrdersService';
 import { Request, Response } from 'express';
 
 class ListOrdersController {

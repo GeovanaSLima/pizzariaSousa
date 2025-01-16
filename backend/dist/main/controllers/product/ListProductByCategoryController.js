@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ListProductByCategoryController = void 0;
-const ListProductByCategoryService_1 = require("@/services/product/ListProductByCategoryService");
+const ListProductByCategoryService_1 = require("../../services/product/ListProductByCategoryService");
 class ListProductByCategoryController {
     async handle(req, res) {
         const category_id = req.query.category_id;

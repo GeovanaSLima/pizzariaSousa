@@ -1,4 +1,4 @@
-import { DeleteOrderService } from '@/services/order/DeleteOrderService';
+import { DeleteOrderService } from '../../services/order/DeleteOrderService';
 import { Request, Response } from 'express';
 
 class DeleteOrderController {

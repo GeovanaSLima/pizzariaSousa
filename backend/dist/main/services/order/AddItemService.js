@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AddItemService = void 0;
-const prisma_1 = __importDefault(require("@/prisma"));
+const prisma_1 = __importDefault(require("../../prisma"));
 class AddItemService {
     async execute({ order_id, product_id, amount }) {
         const orderExists = await prisma_1.default.order.findFirst({

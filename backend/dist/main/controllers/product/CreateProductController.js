@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateProductController = void 0;
-const CreateProductService_1 = require("@/services/product/CreateProductService");
+const CreateProductService_1 = require("../../services/product/CreateProductService");
 const cloudinary_1 = require("cloudinary");
 cloudinary_1.v2.config({
     cloud_name: process.env.CLOUDINARY_NAME,

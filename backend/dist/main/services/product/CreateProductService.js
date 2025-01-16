@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateProductService = void 0;
-const prisma_1 = __importDefault(require("@/prisma"));
+const prisma_1 = __importDefault(require("../../prisma"));
 class CreateProductService {
     async execute({ name, price, description, banner, category_id, }) {
         const requiredFields = { name, price, description, banner, category_id };

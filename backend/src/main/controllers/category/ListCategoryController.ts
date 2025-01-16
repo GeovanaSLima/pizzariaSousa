@@ -1,4 +1,4 @@
-import { ListCategoryService } from '@/services/category/ListCategoryService';
+import { ListCategoryService } from '../../services/category/ListCategoryService';
 import { Request, Response } from 'express';
 
 class ListCategoryController {
