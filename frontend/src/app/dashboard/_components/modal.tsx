@@ -37,6 +37,13 @@ export function OrderDetail() {
 
           {order.map((item) => (
             <section className={styles.modalItem} key={item.id}>
+              <img
+                src={item.product.banner}
+                width={120}
+                height={120}
+                alt="Foto do Produto"
+                style={{ marginBottom: 8 }}
+              />
               <span>
                 Qtd: {item.amount} -{' '}
                 <b>{wordToWordCapitalize(item.product.name)}</b> - R${' '}
