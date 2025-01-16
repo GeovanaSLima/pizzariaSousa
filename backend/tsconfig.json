@@ -9,9 +9,9 @@
     "strict": false,
     "skipLibCheck": true,
     "outDir": "./dist",
-    "baseUrl": "./src",
+    "baseUrl": "./",
     "paths": {
-      "@/*": ["./main/*"]
+      "@/*": ["src/main/*"]
     }
   },
   "include": ["src/**/*.ts", "src/@types/**/*.d.ts", "__tests__/**/*.ts"]
