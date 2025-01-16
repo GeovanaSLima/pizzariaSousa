@@ -16,7 +16,7 @@ class CreateProductController {
             throw new Error('Image is required');
         }
         else {
-            const file = req.files['file'];
+            const file = req.files['file'][0];
             const resultFile = await new Promise((resolve, reject) => {
                 cloudinary_1.v2.uploader
                     .upload_stream({}, function (error, result) {

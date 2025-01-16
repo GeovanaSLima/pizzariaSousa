@@ -1,13 +1,10 @@
 {
   "compilerOptions": {
-    "types": ["jest"],
-    "typeRoots": ["./node_modules/@types", "./src/@types"],
     "moduleResolution": "node",
     "module": "commonjs",
-    "esModuleInterop": true,
     "target": "esnext",
     "strict": false,
-    "skipLibCheck": true,
+    "esModuleInterop": true,
     "outDir": "./dist",
     "baseUrl": "./",
     "paths": {

@@ -19,7 +19,7 @@ class CreateProductController {
     if (!req.files || Object.keys(req.files).length === 0) {
       throw new Error('Image is required');
     } else {
-      const file: UploadedFile = req.files['file'];
+      const file: UploadedFile = req.files['file'][0];
 
       const resultFile: UploadApiResponse = await new Promise(
         (resolve, reject) => {
