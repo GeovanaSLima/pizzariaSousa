@@ -1,0 +1,58 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const prisma_1 = __importDefault(require("@/prisma"));
+const ListProductByCategoryService_1 = require("@/services/product/ListProductByCategoryService");
+jest.mock('@/prisma', () => ({
+    product: {
+        findMany: jest.fn(),
+    },
+}));
+describe('ListProductByCategoryService', () => {
+    it('should return all products by category', async () => {
+        const listProductByCategoryService = new ListProductByCategoryService_1.ListProductByCategoryService();
+        const category_id = '123';
+        const mockProductsList = [
+            {
+                id: '1',
+                category_id: '123',
+                name: 'Coca-Cola',
+                price: '5.00',
+                banner: 'coca-cola.jpg',
+                description: 'Coca-Cola lata 350ml',
+                created_at: new Date('2025-01-09T04:24:34.790Z'),
+                updated_at: new Date('2025-01-09T04:24:34.790Z'),
+            },
+            {
+                id: '2',
+                category_id: '123',
+                name: 'Gurana',
+                price: '5.00',
+                banner: 'gurana.jpg',
+                description: 'Guarana lata 350ml',
+                created_at: new Date('2025-01-09T04:24:34.790Z'),
+                updated_at: new Date('2025-01-09T04:24:34.790Z'),
+            },
+            {
+                id: '3',
+                category_id: '456',
+                name: 'Calabresa',
+                price: '55.00',
+                banner: 'calabresa.jpg',
+                description: 'Pizza de calabresa',
+                created_at: new Date('2025-01-09T04:24:34.790Z'),
+                updated_at: new Date('2025-01-09T04:24:34.790Z'),
+            },
+        ];
+        jest
+            .mocked(prisma_1.default.product.findMany)
+            .mockResolvedValue(mockProductsList);
+        const result = await listProductByCategoryService.execute({ category_id });
+        expect(result).toEqual(mockProductsList);
+        expect(prisma_1.default.product.findMany).toHaveBeenCalledWith({
+            where: { category_id },
+        });
+    });
+});
