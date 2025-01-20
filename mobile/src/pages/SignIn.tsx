@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import {
+  ActivityIndicator,
   Image,
   StyleSheet,
   Text,
@@ -10,7 +11,7 @@ import {
 import { AuthContext } from '../contexts/AuthContext';
 
 export default function SignIn() {
-  const { user, signIn } = useContext(AuthContext);
+  const { user, signIn, loadingAuth } = useContext(AuthContext);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -30,8 +31,6 @@ export default function SignIn() {
         style={styles.logo}
       />
 
-      <Text>{user?.name}</Text>
-
       <View style={styles.inputContainer}>
         <TextInput
           placeholder={'Digite seu email...'}
@@ -50,7 +49,11 @@ export default function SignIn() {
         />
 
         <TouchableOpacity style={styles.button} onPress={handleLogin}>
-          <Text style={styles.buttonText}>Acessar</Text>
+          {loadingAuth ? (
+            <ActivityIndicator size={25} color="#FFF" />
+          ) : (
+            <Text style={styles.buttonText}>Acessar</Text>
+          )}
         </TouchableOpacity>
       </View>
     </View>
