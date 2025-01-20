@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   Image,
   StyleSheet,
@@ -7,14 +7,18 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { AuthContext } from '../contexts/AuthContext';
 
 export default function SignIn() {
+  const { user } = useContext(AuthContext);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   function handleLogin() {
-    console.log(email);
-    console.log(password);
+    if (email === '' || password === '') {
+      return;
+    }
   }
 
   return (
@@ -23,6 +27,8 @@ export default function SignIn() {
         source={require('../../assets/splash-icon.png')}
         style={styles.logo}
       />
+
+      <Text>{user?.name}</Text>
 
       <View style={styles.inputContainer}>
         <TextInput
