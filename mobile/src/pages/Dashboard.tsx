@@ -12,6 +12,8 @@ import {
   View,
 } from 'react-native';
 import { StackParamsList } from '../routes/app.routes';
+import MainLayout from './_layout';
+import { Button } from '../components/Button';
 
 export default function Dashboard() {
   const navigation =
@@ -30,12 +32,7 @@ export default function Dashboard() {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Image
-        style={styles.logo}
-        source={require('../../assets/splash-icon.png')}
-      />
-
+    <MainLayout>
       <Text style={styles.title}>Novo Pedido</Text>
 
       <TextInput
@@ -47,10 +44,10 @@ export default function Dashboard() {
         onChangeText={setNumber}
       />
 
-      <TouchableOpacity style={styles.button} onPress={openOrder}>
+      <Button onPress={openOrder} marginTop={26}>
         <Text style={styles.buttonText}>Abrir Mesa</Text>
-      </TouchableOpacity>
-    </SafeAreaView>
+      </Button>
+    </MainLayout>
   );
 }
 
@@ -82,15 +79,6 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18,
     textAlign: 'center',
-  },
-  button: {
-    width: '90%',
-    height: 45,
-    backgroundColor: '#e11138',
-    borderRadius: 4,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 26,
   },
   buttonText: {
     color: '#fff',

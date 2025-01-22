@@ -9,6 +9,7 @@ import {
   View,
 } from 'react-native';
 import { AuthContext } from '../contexts/AuthContext';
+import { Button } from '../components/Button';
 
 export default function SignIn() {
   const { user, signIn, loadingAuth } = useContext(AuthContext);
@@ -48,13 +49,13 @@ export default function SignIn() {
           onChangeText={(text) => setPassword(text)}
         />
 
-        <TouchableOpacity style={styles.button} onPress={handleLogin}>
+        <Button marginTop={16} onPress={handleLogin}>
           {loadingAuth ? (
             <ActivityIndicator size={25} color="#FFF" />
           ) : (
             <Text style={styles.buttonText}>Acessar</Text>
           )}
-        </TouchableOpacity>
+        </Button>
       </View>
     </View>
   );
@@ -85,15 +86,6 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     paddingHorizontal: 14,
     color: '#FFF',
-  },
-  button: {
-    width: '95%',
-    height: 45,
-    backgroundColor: '#e11138',
-    borderRadius: 4,
-    marginTop: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   buttonText: {
     fontSize: 18,
