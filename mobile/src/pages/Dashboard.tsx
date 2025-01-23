@@ -1,53 +1,79 @@
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import {
-  Image,
+  Alert,
   SafeAreaView,
   StyleSheet,
   Text,
   TextInput,
-  Touchable,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import { StackParamsList } from '../routes/app.routes';
-import MainLayout from './_layout';
 import { Button } from '../components/Button';
+import Footer from '../components/Footer';
+import { api } from '../services/api';
 
 export default function Dashboard() {
   const navigation =
     useNavigation<NativeStackNavigationProp<StackParamsList>>();
   const [number, setNumber] = useState('');
+  const [name, setName] = useState('');
 
   async function openOrder() {
-    if (number === '') {
+    if (number.trim() === '') {
+      Alert.alert('Erro', 'Por favor, informe o número da mesa.');
       return;
     }
 
-    navigation.navigate('Order', {
-      number: number,
-      order_id: '29a9235f-ee86-43c9-a901-bc97e7d84b2a',
-    });
+    try {
+      const response = await api.post('/order', {
+        table: Number(number),
+        ...(name.trim() && { name }),
+      });
+
+      navigation.navigate('Order', {
+        number: number,
+        order_id: response.data.id,
+      });
+
+      setNumber('');
+      setName('');
+    } catch (error) {
+      console.error('Erro ao abrir pedido:', error);
+      Alert.alert('Erro', 'Não foi possível abrir o pedido. Tente novamente.');
+    }
   }
 
   return (
-    <MainLayout>
-      <Text style={styles.title}>Novo Pedido</Text>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.content}>
+        <Text style={styles.title}>Novo Pedido</Text>
 
-      <TextInput
-        style={styles.input}
-        keyboardType={'number-pad'}
-        placeholder="Número da mesa"
-        placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
-        value={number}
-        onChangeText={setNumber}
-      />
+        <TextInput
+          style={styles.input}
+          keyboardType={'number-pad'}
+          placeholder="Número da mesa"
+          placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+          value={number}
+          onChangeText={setNumber}
+        />
 
-      <Button onPress={openOrder} marginTop={26}>
-        <Text style={styles.buttonText}>Abrir Mesa</Text>
-      </Button>
-    </MainLayout>
+        <TextInput
+          style={styles.input}
+          placeholder="Nome (Opcional)"
+          placeholderTextColor={'rgba(255, 255, 255, 0.7)'}
+          value={name}
+          onChangeText={setName}
+        />
+
+        <Button marginTop={26} onPress={openOrder}>
+          <Text style={styles.buttonText}>Abrir Mesa</Text>
+        </Button>
+      </View>
+
+      <Footer />
+    </SafeAreaView>
   );
 }
 
@@ -55,14 +81,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#1d1d2e',
+    paddingVertical: '5%',
+  },
+  content: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  logo: {
-    position: 'absolute',
-    bottom: 10,
-    width: '40%',
-    resizeMode: 'contain',
+    paddingHorizontal: 16,
   },
   title: {
     fontSize: 24,
@@ -77,7 +102,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#101026',
     paddingHorizontal: 14,
     color: '#fff',
-    fontSize: 18,
+    fontSize: 14,
+    marginTop: 14,
     textAlign: 'center',
   },
   buttonText: {
