@@ -1,6 +1,7 @@
 import { useRoute, RouteProp, useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import {
+  Modal,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -11,6 +12,7 @@ import {
 import Footer from '../components/Footer';
 import { Feather } from '@expo/vector-icons';
 import { api } from '../services/api';
+import ModalPicker from '../components/Modal';
 
 type RouteDetailParams = {
   Order: {
@@ -19,7 +21,7 @@ type RouteDetailParams = {
   };
 };
 
-type CategoryProps = {
+export type CategoryProps = {
   id: string;
   name: string;
 };
@@ -31,8 +33,11 @@ export default function Order() {
   const navigation = useNavigation();
 
   const [category, setCategory] = useState<CategoryProps[] | []>([]);
-  const [categorySelected, setCategorySelected] = useState<CategoryProps>();
+  const [categorySelected, setCategorySelected] = useState<
+    CategoryProps | undefined
+  >();
   const [amount, setAmount] = useState('1');
+  const [modalCategoryVisible, setModalCategoryVisible] = useState(false);
 
   async function handleCloseOrder() {
     try {
@@ -59,6 +64,22 @@ export default function Order() {
     loadInfo();
   }, []);
 
+  function handleChangeCategory(item: CategoryProps) {
+    setCategorySelected(item);
+  }
+
+  useEffect(() => {
+    async function loadProducts() {
+      const response = await api.get('/category/product', {
+        params: {
+          category_id: categorySelected?.id,
+        },
+      });
+
+      console.log(response.data);
+    }
+  }, [categorySelected]);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -70,7 +91,10 @@ export default function Order() {
       </View>
 
       {category.length !== 0 && (
-        <TouchableOpacity style={styles.input}>
+        <TouchableOpacity
+          style={styles.input}
+          onPress={() => setModalCategoryVisible(true)}
+        >
           <Text style={{ color: '#FFF' }}>{categorySelected?.name}</Text>
         </TouchableOpacity>
       )}
@@ -102,6 +126,18 @@ export default function Order() {
       </View>
 
       <View style={{ flex: 1 }} />
+
+      <Modal
+        transparent={true}
+        visible={modalCategoryVisible}
+        animationType={'fade'}
+      >
+        <ModalPicker
+          handleCloseModal={() => setModalCategoryVisible(false)}
+          options={category}
+          selectedItem={handleChangeCategory}
+        />
+      </Modal>
 
       <Footer />
     </SafeAreaView>
