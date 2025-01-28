@@ -13,6 +13,7 @@ import Footer from '../components/Footer';
 import { Feather } from '@expo/vector-icons';
 import { api } from '../services/api';
 import ModalPicker from '../components/Modal';
+import { wordToWordCapitalize } from '../@lib/utils';
 
 type RouteDetailParams = {
   Order: {
@@ -82,6 +83,13 @@ export default function Order() {
     setProductSelected(item);
   }
 
+  function capitalizeNames<T extends { name: string }>(props: T[]): T[] {
+    return props.map((item) => ({
+      ...item,
+      name: wordToWordCapitalize(item.name),
+    }));
+  }
+
   useEffect(() => {
     async function loadProducts() {
       const response = await api.get('/category/product', {
@@ -112,7 +120,9 @@ export default function Order() {
           style={styles.input}
           onPress={() => setModalCategoryVisible(true)}
         >
-          <Text style={{ color: '#FFF' }}>{categorySelected?.name}</Text>
+          <Text style={{ color: '#FFF' }}>
+            {wordToWordCapitalize(categorySelected?.name)}
+          </Text>
         </TouchableOpacity>
       )}
 
@@ -121,7 +131,9 @@ export default function Order() {
           style={styles.input}
           onPress={() => setModalProductVisible(true)}
         >
-          <Text style={{ color: '#FFF' }}>{productSelected?.name}</Text>
+          <Text style={{ color: '#FFF' }}>
+            {wordToWordCapitalize(productSelected?.name)}
+          </Text>
         </TouchableOpacity>
       )}
 
@@ -156,7 +168,7 @@ export default function Order() {
       >
         <ModalPicker
           handleCloseModal={() => setModalCategoryVisible(false)}
-          options={category}
+          options={capitalizeNames(category)}
           selectedItem={handleChangeCategory}
         />
       </Modal>
@@ -168,7 +180,7 @@ export default function Order() {
       >
         <ModalPicker
           handleCloseModal={() => setModalProductVisible(false)}
-          options={products}
+          options={capitalizeNames(products)}
           selectedItem={handleChangeProduct}
         />
       </Modal>

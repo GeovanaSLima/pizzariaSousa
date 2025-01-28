@@ -1,7 +1,7 @@
-import axios from "axios";
+import axios from 'axios';
 
 const api = axios.create({
-  baseURL: process.env.EXPO_PUBLIC_API_URL,
+  baseURL: 'http://192.168.15.14:3333',
 });
 
 export { api };
