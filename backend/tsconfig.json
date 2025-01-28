@@ -1,15 +1,15 @@
 {
   "compilerOptions": {
+    "types": ["jest"],
+    "typeRoots": ["./node_modules/@types", "./src/@types"],
     "moduleResolution": "node",
     "module": "commonjs",
+    "esModuleInterop": true,
     "target": "esnext",
     "strict": false,
-    "esModuleInterop": true,
+    "skipLibCheck": true,
     "outDir": "./dist",
-    "baseUrl": "./",
-    "paths": {
-      "@/*": ["src/main/*"]
-    }
+    "baseUrl": "."
   },
   "include": ["src/**/*.ts", "src/@types/**/*.d.ts", "__tests__/**/*.ts"]
 }
