@@ -1,6 +1,7 @@
 import { useRoute, RouteProp, useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import {
+  Modal,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -11,6 +12,8 @@ import {
 import Footer from '../components/Footer';
 import { Feather } from '@expo/vector-icons';
 import { api } from '../services/api';
+import ModalPicker from '../components/Modal';
+import { wordToWordCapitalize } from '../@lib/utils';
 
 type RouteDetailParams = {
   Order: {
@@ -19,7 +22,12 @@ type RouteDetailParams = {
   };
 };
 
-type CategoryProps = {
+export type CategoryProps = {
+  id: string;
+  name: string;
+};
+
+type ProductProps = {
   id: string;
   name: string;
 };
@@ -31,8 +39,16 @@ export default function Order() {
   const navigation = useNavigation();
 
   const [category, setCategory] = useState<CategoryProps[] | []>([]);
-  const [categorySelected, setCategorySelected] = useState<CategoryProps>();
+  const [categorySelected, setCategorySelected] = useState<
+    CategoryProps | undefined
+  >();
   const [amount, setAmount] = useState('1');
+  const [modalCategoryVisible, setModalCategoryVisible] = useState(false);
+  const [products, setProducts] = useState<ProductProps[] | []>([]);
+  const [productSelected, setProductSelected] = useState<
+    ProductProps | undefined
+  >();
+  const [modalProductVisible, setModalProductVisible] = useState(false);
 
   async function handleCloseOrder() {
     try {
@@ -59,6 +75,36 @@ export default function Order() {
     loadInfo();
   }, []);
 
+  function handleChangeCategory(item: CategoryProps) {
+    setCategorySelected(item);
+  }
+
+  function handleChangeProduct(item: ProductProps) {
+    setProductSelected(item);
+  }
+
+  function capitalizeNames<T extends { name: string }>(props: T[]): T[] {
+    return props.map((item) => ({
+      ...item,
+      name: wordToWordCapitalize(item.name),
+    }));
+  }
+
+  useEffect(() => {
+    async function loadProducts() {
+      const response = await api.get('/category/product', {
+        params: {
+          category_id: categorySelected?.id,
+        },
+      });
+
+      setProducts(response.data);
+      setProductSelected(response.data[0]);
+    }
+
+    loadProducts();
+  }, [categorySelected]);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -70,14 +116,26 @@ export default function Order() {
       </View>
 
       {category.length !== 0 && (
-        <TouchableOpacity style={styles.input}>
-          <Text style={{ color: '#FFF' }}>{categorySelected?.name}</Text>
+        <TouchableOpacity
+          style={styles.input}
+          onPress={() => setModalCategoryVisible(true)}
+        >
+          <Text style={{ color: '#FFF' }}>
+            {wordToWordCapitalize(categorySelected?.name)}
+          </Text>
         </TouchableOpacity>
       )}
 
-      <TouchableOpacity style={styles.input}>
-        <Text style={{ color: '#FFF' }}>Pizzas</Text>
-      </TouchableOpacity>
+      {products.length !== 0 && (
+        <TouchableOpacity
+          style={styles.input}
+          onPress={() => setModalProductVisible(true)}
+        >
+          <Text style={{ color: '#FFF' }}>
+            {wordToWordCapitalize(productSelected?.name)}
+          </Text>
+        </TouchableOpacity>
+      )}
 
       <View style={styles.qtdContainer}>
         <Text style={styles.qtdText}>Quantidade</Text>
@@ -102,6 +160,30 @@ export default function Order() {
       </View>
 
       <View style={{ flex: 1 }} />
+
+      <Modal
+        transparent={true}
+        visible={modalCategoryVisible}
+        animationType={'fade'}
+      >
+        <ModalPicker
+          handleCloseModal={() => setModalCategoryVisible(false)}
+          options={capitalizeNames(category)}
+          selectedItem={handleChangeCategory}
+        />
+      </Modal>
+
+      <Modal
+        transparent={true}
+        visible={modalProductVisible}
+        animationType={'fade'}
+      >
+        <ModalPicker
+          handleCloseModal={() => setModalProductVisible(false)}
+          options={capitalizeNames(products)}
+          selectedItem={handleChangeProduct}
+        />
+      </Modal>
 
       <Footer />
     </SafeAreaView>
