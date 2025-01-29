@@ -5,6 +5,7 @@ import logoImg from '/public/logo.svg';
 import { api } from '@/services/api';
 import { redirect } from 'next/navigation';
 import { Button } from '@/components/button';
+import { toast } from 'sonner';
 
 export default function SignUp() {
   async function handleRegister(formData: FormData) {
@@ -15,7 +16,7 @@ export default function SignUp() {
     const password = formData.get('password');
 
     if (name === '' || email === '' || password === '') {
-      console.log('Preencha todos os campos');
+      toast.error('Preencha todos os campos.');
       return;
     }
 
