@@ -1,70 +1,56 @@
-import express, { Application, Request, Response, NextFunction } from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv';
-import { router } from './routes';
-import path from 'path';
-import fileUpload = require('express-fileupload');
+import { CreateProductService } from '../../services/product/CreateProductService';
+import { Request, Response } from 'express';
+import { UploadedFile } from 'express-fileupload';
+import { v2 as cloudinary, UploadApiResponse } from 'cloudinary';
 
-dotenv.config({ path: `.env.${process.env.NODE_ENV || 'development'}` });
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_KEY,
+  api_secret: process.env.CLOUDINARY_SECRET,
+});
 
-class App {
-  private app: Application;
-  constructor() {
-    this.app = express();
-    this.config();
-    this.errorHandler();
-    this.routes();
-    this.files();
-  }
+class CreateProductController {
+  async handle(req: Request, res: Response) {
+    const { name, price, description, category_id } = req.body;
+    const createProductService = new CreateProductService();
 
-  config() {
-    this.app.use(express.json());
-    this.app.use(express.urlencoded({ extended: true }));
-    this.app.use(cors());
-    this.fileUpload();
-  }
+    // 🔹 LOG de depuração no Vercel
+    console.log('🔹 Files recebidos:', req.files);
 
-  errorHandler() {
-    this.app.use(
-      (err: Error, req: Request, res: Response, next: NextFunction) => {
-        if (err instanceof Error) {
-          res.status(400).json({
-            error: err.message,
-          });
-          return;
-        }
+    // Verifica se o arquivo existe
+    if (!req.files || !req.files['file']) {
+      console.error('❌ Nenhuma imagem foi enviada');
+      return res.status(400).json({ error: 'Image is required' });
+    }
 
-        res.status(500).json({
-          status: 'error',
-          message: 'Internal server error',
-        });
-        return;
-      }
-    );
-  }
+    const file = Array.isArray(req.files['file']) ? req.files['file'][0] : req.files['file'];
 
-  routes() {
-    this.app.use(router);
-  }
+    if (!file || !file.tempFilePath) {
+      console.error('❌ O arquivo não contém tempFilePath');
+      return res.status(400).json({ error: 'File data is missing' });
+    }
 
-  listen(port: string) {
-    this.app.listen(Number(port), () => console.log('Server running'));
-  }
+    try {
+      console.log('🔹 Enviando arquivo para Cloudinary:', file.tempFilePath);
 
-  files() {
-    this.app.use(
-      '/files',
-      express.static(path.resolve(__dirname, '..', '..', 'tmp'))
-    );
-  }
+      const resultFile: UploadApiResponse = await cloudinary.uploader.upload(file.tempFilePath);
 
-  fileUpload() {
-    this.app.use(
-      fileUpload({
-        limits: { fileSize: 50 * 1024 * 1024 },
-      })
-    );
+      console.log('✅ Upload bem-sucedido:', resultFile.secure_url);
+
+      const product = await createProductService.execute({
+        name,
+        price,
+        description,
+        banner: resultFile.secure_url,
+        category_id,
+      });
+
+      return res.json(product);
+    } catch (error) {
+      console.error('❌ Erro no upload:', error);
+      return res.status(500).json({ error: 'Failed to upload image' });
+    }
   }
 }
 
-export { App };
+export { CreateProductController };

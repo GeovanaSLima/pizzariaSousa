@@ -1,58 +1,63 @@
-import { CreateProductService } from '../../services/product/CreateProductService';
-import { Request, Response } from 'express';
-import { UploadedFile } from 'express-fileupload';
+import express, { Application, Request, Response, NextFunction } from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import { router } from '../../routes';
+import fileUpload from 'express-fileupload';
 
-import { v2 as cloudinary, UploadApiResponse } from 'cloudinary';
+dotenv.config({ path: `.env.${process.env.NODE_ENV || 'development'}` });
 
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_NAME,
-  api_key: process.env.CLOUDINARY_KEY,
-  api_secret: process.env.CLOUDINARY_SECRET,
-});
+class App {
+  private app: Application;
 
-class CreateProductController {
-  async handle(req: Request, res: Response) {
-    const { name, price, description, category_id } = req.body;
+  constructor() {
+    this.app = express();
+    this.setupMiddlewares();
+    this.routes();
+    this.errorHandler();
+  }
 
-    const createProductService = new CreateProductService();
+  setupMiddlewares() {
+    this.app.use(express.json());
+    this.app.use(express.urlencoded({ extended: true }));
+    this.app.use(cors());
 
-    if (!req.files || !req.files['file']) {
-      throw new Error('Image is required');
-    }
-
-    const file = Array.isArray(req.files['file'])
-      ? req.files['file'][0]
-      : req.files['file'];
-
-    if (!file.data) {
-      throw new Error('File data is missing');
-    }
-
-    const resultFile: UploadApiResponse = await new Promise(
-      (resolve, reject) => {
-        cloudinary.uploader
-          .upload_stream({}, (error, result) => {
-            if (error) {
-              reject(error);
-              return;
-            }
-
-            resolve(result as UploadApiResponse);
-          })
-          .end(file.data);
-      }
+    this.app.use(
+      fileUpload({
+        useTempFiles: true, 
+        tempFileDir: '/tmp/',
+        limits: { fileSize: 50 * 1024 * 1024 },
+        abortOnLimit: true,
+        safeFileNames: true,
+        preserveExtension: true,
+      })
     );
 
-    const product = await createProductService.execute({
-      name,
-      price,
-      description,
-      banner: resultFile.url,
-      category_id,
+    // 🔹 LOG para depuração no Vercel
+    this.app.use((req: Request, res: Response, next: NextFunction) => {
+      console.log('🔹 Request Body:', req.body);
+      console.log('🔹 Request Files:', req.files);
+      next();
     });
+  }
 
-    res.json(product);
+  routes() {
+    this.app.use(router);
+  }
+
+  errorHandler() {
+    this.app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+      if (err instanceof Error) {
+        console.error('🔴 Error:', err.message);
+        res.status(400).json({ error: err.message });
+        return;
+      }
+      res.status(500).json({ status: 'error', message: 'Internal server error' });
+    });
+  }
+
+  listen(port: string) {
+    this.app.listen(Number(port), () => console.log('🚀 Server running on port', port));
   }
 }
 
-export { CreateProductController };
+export { App };

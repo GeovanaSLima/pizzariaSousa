@@ -36,8 +36,6 @@ export default function Home() {
         httpOnly: false,
         secure: process.env.NODE_ENV === 'production',
       });
-
-      console.log(response.data);
     } catch (err) {
       return;
     }
