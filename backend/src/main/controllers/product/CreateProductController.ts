@@ -1,54 +1,63 @@
-import { CreateProductService } from '../../services/product/CreateProductService';
-import { Request, Response } from 'express';
-import { UploadedFile } from 'express-fileupload';
-import { v2 as cloudinary, UploadApiResponse } from 'cloudinary';
+import express, { Application, Request, Response, NextFunction } from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import { router } from '../../routes';
+import fileUpload from 'express-fileupload';
 
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_NAME,
-  api_key: process.env.CLOUDINARY_KEY,
-  api_secret: process.env.CLOUDINARY_SECRET,
-});
+dotenv.config({ path: `.env.${process.env.NODE_ENV || 'development'}` });
 
-class CreateProductController {
-  async handle(req: Request, res: Response) {
-    const { name, price, description, category_id } = req.body;
-    const createProductService = new CreateProductService();
+class App {
+  private app: Application;
 
-    console.log('🔹 Files recebidos:', req.files);
+  constructor() {
+    this.app = express();
+    this.setupMiddlewares();
+    this.routes();
+    this.errorHandler();
+  }
 
-    if (!req.files || !req.files['file']) {
-      console.error('❌ Nenhuma imagem foi enviada');
-      return res.status(400).json({ error: 'Image is required' });
-    }
+  setupMiddlewares() {
+    this.app.use(express.json());
+    this.app.use(express.urlencoded({ extended: true }));
+    this.app.use(cors());
 
-    const file = Array.isArray(req.files['file']) ? req.files['file'][0] : req.files['file'];
+    this.app.use(
+      fileUpload({
+        useTempFiles: true, 
+        tempFileDir: '/tmp/',
+        limits: { fileSize: 50 * 1024 * 1024 },
+        abortOnLimit: true,
+        safeFileNames: true,
+        preserveExtension: true,
+      })
+    );
 
-    if (!file || !file.tempFilePath) {
-      console.error('❌ O arquivo não contém tempFilePath');
-      return res.status(400).json({ error: 'File data is missing' });
-    }
+    // 🔹 LOG para depuração no Vercel
+    this.app.use((req: Request, res: Response, next: NextFunction) => {
+      console.log('🔹 Request Body:', req.body);
+      console.log('🔹 Request Files:', req.files);
+      next();
+    });
+  }
 
-    try {
-      console.log('🔹 Enviando arquivo para Cloudinary:', file.tempFilePath);
+  routes() {
+    this.app.use(router);
+  }
 
-      const resultFile: UploadApiResponse = await cloudinary.uploader.upload(file.tempFilePath);
+  errorHandler() {
+    this.app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+      if (err instanceof Error) {
+        console.error('🔴 Error:', err.message);
+        res.status(400).json({ error: err.message });
+        return;
+      }
+      res.status(500).json({ status: 'error', message: 'Internal server error' });
+    });
+  }
 
-      console.log('✅ Upload bem-sucedido:', resultFile.secure_url);
-
-      const product = await createProductService.execute({
-        name,
-        price,
-        description,
-        banner: resultFile.secure_url,
-        category_id,
-      });
-
-      return res.json(product);
-    } catch (error) {
-      console.error('❌ Erro no upload:', error);
-      return res.status(500).json({ error: 'Failed to upload image' });
-    }
+  listen(port: string) {
+    this.app.listen(Number(port), () => console.log('🚀 Server running on port', port));
   }
 }
 
-export { CreateProductController };
+export { App };
